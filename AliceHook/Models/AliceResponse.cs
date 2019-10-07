@@ -27,6 +27,7 @@ namespace AliceHook.Models
         public AliceResponse(AliceRequest request)
         {
             Session = request.Session;
+            Version = request.Version;
         }
     }
 }
