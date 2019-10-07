@@ -22,8 +22,7 @@ namespace AliceHook.Engine.Modifiers
             db.Users.Update(state.User);
             db.SaveChanges();
 
-            state.Step = Step.None;
-            state.TempUrl = "";
+            state.Clear();
 
             return new SimpleResponse
             {
