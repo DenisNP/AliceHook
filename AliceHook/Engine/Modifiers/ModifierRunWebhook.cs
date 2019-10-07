@@ -9,7 +9,7 @@ namespace AliceHook.Engine.Modifiers
     {
         protected override bool Check(AliceRequest request, State state)
         {
-            return GetWebhook(request, state) != null;
+            return state.Step == Step.None && GetWebhook(request, state) != null;
         }
 
         protected override SimpleResponse Respond(AliceRequest request, State state)

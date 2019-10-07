@@ -14,6 +14,7 @@ namespace AliceHook.Engine
             new ModifierAddWebhook(),
             new ModifierAddPhrase(),
             new ModifierFinalWebhook(),
+            new ModifierRunWebhook(),
             new ModifierUnknown()
         };
         
