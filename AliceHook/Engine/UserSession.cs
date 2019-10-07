@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AliceHook.Engine.Modifiers;
 using AliceHook.Models;
+using Newtonsoft.Json;
 
 namespace AliceHook.Engine
 {
@@ -35,6 +36,7 @@ namespace AliceHook.Engine
             }
 
             _state.User = user;
+            Console.WriteLine("User Loaded: " + JsonConvert.SerializeObject(_state.User));
         }
 
         public AliceResponse HandleRequest(AliceRequest aliceRequest)

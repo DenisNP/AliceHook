@@ -30,7 +30,7 @@ namespace AliceHook.Engine.Modifiers
 
         private Webhook GetWebhook(AliceRequest request, State state)
         {
-            var requestCommand = request.Request.Command;
+            var requestCommand = request.Request.Command.ToLower().Trim();
             return state.User.Webhooks.FirstOrDefault(w => requestCommand.StartsWith(w.Phrase));
         }
     }
