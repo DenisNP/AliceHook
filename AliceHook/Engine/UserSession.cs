@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AliceHook.Engine.Modifiers;
 using AliceHook.Models;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace AliceHook.Engine
@@ -24,7 +25,7 @@ namespace AliceHook.Engine
         public UserSession(string userId)
         {
             using var db = new DatabaseContext();
-            var user = db.Users.FirstOrDefault(u => u.Id == userId);
+            var user = db.Users.Include(u => u.Webhooks).FirstOrDefault(u => u.Id == userId);
             if (user == null)
             {
                 user = new User
