@@ -11,6 +11,7 @@ namespace AliceHook.Engine.Modifiers
 
         protected override SimpleResponse Respond(AliceRequest request, State state)
         {
+            state.Step = Step.None;
             return new SimpleResponse
             {
                 Text = "Не поняла"
