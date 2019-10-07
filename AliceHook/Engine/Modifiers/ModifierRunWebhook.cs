@@ -20,7 +20,7 @@ namespace AliceHook.Engine.Modifiers
             {
                 {"value1", request.Request.Command}
             });
-            client.PostAsync(webhook.Url, data);
+            var httpResponseMessage = client.PostAsync(webhook.Url, data).Result;
 
             return new SimpleResponse
             {

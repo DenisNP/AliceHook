@@ -13,7 +13,9 @@ namespace AliceHook.Engine.Modifiers
             var keywords = new List<string>
             {
                 "добав вебхук",
-                "новый вебхук"
+                "новый вебхук",
+                "добав webhook",
+                "новый webhook",
             };
 
             var requestString = request.Request.Nlu.Tokens;
