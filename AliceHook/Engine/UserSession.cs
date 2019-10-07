@@ -30,7 +30,7 @@ namespace AliceHook.Engine
                     Id = userId
                 };
                 db.Users.Add(user);
-                db.SaveChangesAsync();
+                db.SaveChanges();
             }
 
             _state.User = user;

@@ -20,7 +20,7 @@ namespace AliceHook.Engine.Modifiers
             using var db = new DatabaseContext();
             state.User.Webhooks.Add(webhook);
             db.Users.Update(state.User);
-            db.SaveChangesAsync();
+            db.SaveChanges();
 
             state.Step = Step.None;
             state.TempUrl = "";

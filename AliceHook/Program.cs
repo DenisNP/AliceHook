@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace AliceHook
 {
@@ -13,6 +14,13 @@ namespace AliceHook
         {
             new WebHostBuilder()
                 .UseKestrel()
+#if DEBUG
+                .ConfigureLogging(logging =>
+                {
+                    logging.AddDebug();
+                    logging.AddConsole();
+                })
+#endif                           
                 .UseStartup<Startup>()
                 .Build()
                 .Run();
