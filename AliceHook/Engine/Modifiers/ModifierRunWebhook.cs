@@ -20,11 +20,12 @@ namespace AliceHook.Engine.Modifiers
             {
                 {"value1", request.Request.Command}
             });
-            var httpResponseMessage = client.PostAsync(webhook.Url, data).Result;
+            client.PostAsync(webhook.Url, data).Wait();
 
             return new SimpleResponse
             {
-                Text = "Выполнено!"
+                Text = "Выполнено!",
+                Buttons = new []{ "Список", "Помощь", "Выход" }
             };
         }
 

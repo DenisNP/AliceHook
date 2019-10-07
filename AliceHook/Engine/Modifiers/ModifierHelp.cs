@@ -32,21 +32,21 @@ namespace AliceHook.Engine.Modifiers
                 {
                     Text = "",
                     Tts = "",
-                    Buttons = new []{"Добавить вебхук", "Список", "Выход"}
+                    Buttons = new []{ "Добавить вебхук", "Список", "Выход" }
                 },
     
                 Step.AwaitForUrl => new SimpleResponse
                 {
                     Text = "",
                     Tts = "",
-                    Buttons = new []{"Отмена", "Выход"}
+                    Buttons = new []{ "Отмена", "Выход" }
                 },
                 
                 Step.AwaitForKeyword => new SimpleResponse
                 {
                     Text = "",
                     Tts = "",
-                    Buttons = new []{"Отмена", "Выход"}
+                    Buttons = new []{ "Отмена", "Выход" }
                 },
                 
                 _ => throw new ArgumentException("Unknown Step")
