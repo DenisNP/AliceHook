@@ -9,6 +9,7 @@ namespace AliceHook.Engine
 {
     public class UserSession
     {
+        private DateTime _lastActive;
         private static readonly List<ModifierBase> Modifiers = new List<ModifierBase>
         {
             new ModifierEnter(),
@@ -28,6 +29,8 @@ namespace AliceHook.Engine
 
         public UserSession(string userId)
         {
+            _lastActive = DateTime.Now;
+            
             using var db = new DatabaseContext();
             var user = db.Users.Include(u => u.Webhooks).FirstOrDefault(u => u.Id == userId);
             if (user == null)
@@ -46,11 +49,18 @@ namespace AliceHook.Engine
 
         public AliceResponse HandleRequest(AliceRequest aliceRequest)
         {
+            _lastActive = DateTime.Now;
+            
             AliceResponse response = null;
             if (!Modifiers.Any(modifier => modifier.Run(aliceRequest, _state, out response))) {
                 throw new NotSupportedException("No default modifier");
             }
             return response;
+        }
+
+        public bool IsOld()
+        {
+            return (DateTime.Now - _lastActive) > new TimeSpan(1, 0, 0);
         }
     }
 }

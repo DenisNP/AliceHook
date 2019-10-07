@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Concurrent;
 using System.IO;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AliceHook.Engine;
 using AliceHook.Models;
@@ -14,7 +17,9 @@ namespace AliceHook.Controllers
     [Route("/")]
     public class AliceController : ControllerBase
     {
-        private static readonly ConcurrentDictionary<string, UserSession> Sessions = new ConcurrentDictionary<string, UserSession>();
+        private static Timer _timer;
+        private static readonly ConcurrentDictionary<string, UserSession> Sessions 
+            = new ConcurrentDictionary<string, UserSession>();
         private static readonly JsonSerializerSettings ConverterSettings = new JsonSerializerSettings
         {
             ContractResolver = new DefaultContractResolver
@@ -32,6 +37,8 @@ namespace AliceHook.Controllers
         [HttpPost]
         public Task Post()
         {
+            CreateTimer();
+            
             using var reader = new StreamReader(Request.Body);
             var body = reader.ReadToEnd();
 
@@ -43,6 +50,25 @@ namespace AliceHook.Controllers
             var stringResponse = JsonConvert.SerializeObject(aliceResponse, ConverterSettings);
             
             return Response.WriteAsync(stringResponse);
+        }
+
+        private static void CreateTimer()
+        {
+            if (_timer == null)
+            {
+                _timer = new Timer(
+                    RemoveOldSessions,
+                    null,
+                    TimeSpan.Zero,
+                    new TimeSpan(0, 10, 0)
+                );
+            }
+        }
+
+        private static void RemoveOldSessions(object state)
+        {
+            var sessionsToRemove = Sessions.Where(s => s.Value.IsOld()).ToList();
+            sessionsToRemove.ForEach(s => { Sessions.TryRemove(s.Key, out _); });
         }
     }
 }

@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+using AliceHook.Engine;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -7,6 +10,11 @@ namespace AliceHook
     {
         public static void Main(string[] args)
         {
+            using (var db = new DatabaseContext())
+            {
+                var usersCount = db.Users.Count(); // database warmup
+                Console.WriteLine("Users count: " + usersCount);
+            }
             StartServer();
         }
 
