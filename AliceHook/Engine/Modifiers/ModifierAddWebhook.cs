@@ -16,6 +16,8 @@ namespace AliceHook.Engine.Modifiers
                 "новый вебхук",
                 "добав webhook",
                 "новый webhook",
+                "добав веб хук",
+                "новый веб хук",
             };
 
             var requestString = request.Request.Nlu.Tokens;
