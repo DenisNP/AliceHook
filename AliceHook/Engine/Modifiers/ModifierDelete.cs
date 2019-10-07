@@ -16,10 +16,10 @@ namespace AliceHook.Engine.Modifiers
         protected override SimpleResponse Respond(AliceRequest request, State state)
         {
             var w = GetWebhook(request, state);
-            state.User.Webhooks.Remove(w);
             
             using var db = new DatabaseContext();
             db.Users.Update(state.User);
+            state.User.Webhooks.Remove(w);
             db.SaveChanges();
 
             return new SimpleResponse
