@@ -18,7 +18,6 @@ namespace AliceHook.Engine.Modifiers
         protected override SimpleResponse Respond(AliceRequest request, State state)
         {
             state.Clear();
-
             return new SimpleResponse
             {
                 Text = "Отменено. Что теперь?",

@@ -23,8 +23,8 @@ namespace AliceHook.Engine.Modifiers
 
             return new SimpleResponse
             {
-                Text = $"Удален вебхук: {w.Phrase}",
-                Tts = $"Удалён вэбхук: {w.Phrase}",
+                Text = $"Удален вебхук: {w.Phrase}. Что теперь?",
+                Tts = $"Удалён вэбх+ук: {w.Phrase}. Что теперь?",
                 Buttons = new []{ "Добавить вебхук", "Список", "Помощь", "Выход" }
             };
         }

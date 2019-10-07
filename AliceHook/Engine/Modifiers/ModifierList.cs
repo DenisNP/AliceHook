@@ -24,19 +24,19 @@ namespace AliceHook.Engine.Modifiers
                 return new SimpleResponse
                 {
                     Text = "У вас пока нет вебхуков. Самое время добавить.",
-                    Tts = "У вас пока нет вэбхуков. Самое время добавить.",
+                    Tts = "У вас пока нет вэбх+уков. Самое время добавить.",
                     Buttons = new[] {"Добавить вебхук", "Помощь", "Выход"}
                 };
             }
 
-            var removeFirst = $"Удалить {state.User.Webhooks.First().Phrase}\"";
+            var removeFirst = $"Удалить {state.User.Webhooks.First().Phrase}";
             var list = state.User.Webhooks.Select(w => "• " + w.Phrase + ": " + w.Url);
             return new SimpleResponse
             {
                 Text = $"Вывела на экран ваши вебхуки:\n\n {string.Join("\n", list)}\n\nДля удаления скажите \"Удалить\" и ключевую фразу. " +
                        $"Например: \"{removeFirst}\"",
-                Tts = $"Вывела на экран ваши вэбхуки. Для удаления скаж+ите \"Удалить\" и ключевую фразу. " +
-                      $"Например \"{removeFirst}",
+                Tts = $"Вывела на экран ваши вэбх+уки. Для удаления скаж+ите - - \"Удалить\" - - и ключевую фразу. " +
+                      $"Например - - {removeFirst}",
                 Buttons = new[] {removeFirst, "Помощь", "Выход"}
             };
         }
