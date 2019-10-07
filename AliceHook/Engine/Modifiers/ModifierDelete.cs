@@ -18,7 +18,7 @@ namespace AliceHook.Engine.Modifiers
             var w = GetWebhook(request, state);
             
             using var db = new DatabaseContext();
-            db.Users.Update(state.User);
+            db.Remove(w);
             state.User.Webhooks.Remove(w);
             db.SaveChanges();
 

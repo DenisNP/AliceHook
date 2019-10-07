@@ -7,6 +7,6 @@ namespace AliceHook.Models
     {
         [Key]
         public string Id { get; set; }
-        public virtual List<Webhook> Webhooks { get; set; } = new List<Webhook>();
+        public List<Webhook> Webhooks { get; set; } = new List<Webhook>();
     }
 }
