@@ -27,7 +27,9 @@ namespace AliceHook.Engine.Modifiers
 
             return new SimpleResponse
             {
-                Text = $"Добавлен вебхук {webhook.Url} для ключевой фразы {webhook.Phrase}"
+                Text = $"Теперь, когда вы скажете фразу, которая начинается на \"{webhook.Phrase}\", я вызову этот " +
+                       $"адрес и передам туда весь ваш текст в параметр value1.",
+                Buttons = new []{ "Список", "Помощь", "Выход" }
             };
         }
     }

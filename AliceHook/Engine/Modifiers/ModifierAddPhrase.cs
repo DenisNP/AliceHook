@@ -20,7 +20,8 @@ namespace AliceHook.Engine.Modifiers
 
             return new SimpleResponse
             {
-                Text = "А теперь назови фразу активации"
+                Text = "А теперь назовите фразу активации:",
+                Buttons = new []{ "Отмена", "Помощь", "Выход" }
             };
         }
     }

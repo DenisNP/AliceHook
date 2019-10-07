@@ -23,11 +23,20 @@ namespace AliceHook.Engine.Modifiers
 
         protected override SimpleResponse Respond(AliceRequest request, State state)
         {
+            if (state.User.Webhooks.Count >= 10)
+            {
+                return new SimpleResponse
+                {
+                    Text = "У вас очень много вебхуков, удалите что-нибудь сначала с помощью команды \"Список\"",
+                    Tts = "У вас очень много вэбхуков, удалите что-нибудь сначала с помощью команды - Список",
+                    Buttons = new []{ "Список", "Помощь", "Выход" }
+                };
+            }
             state.Step = Step.AwaitForUrl;
             return new SimpleResponse
             {
-                Text = "Введи URL вебхука:",
-                Tts = "Введи URL вэбх+ука",
+                Text = "Введите URL вебхука:",
+                Tts = "Введите URL вэбх+ука",
                 Buttons = new []{ "Отмена", "Помощь", "Выход" }
             };
         }
