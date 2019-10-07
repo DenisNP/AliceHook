@@ -4,28 +4,21 @@ using AliceHook.Models;
 
 namespace AliceHook.Engine.Modifiers
 {
-    public class ModifierAddWebhook : ModifierBase
+    public class ModifierAddWebhook : ModifierBaseKeywords
     {
-        protected override bool Check(AliceRequest request, State state)
+        protected override List<string> Keywords { get; } = new List<string>
         {
-            if (state.Step != Step.None) return false;
-            
-            var keywords = new List<string>
-            {
-                "добав вебхук",
-                "новый вебхук",
-                "добав webhook",
-                "новый webhook",
-                "добав веб хук",
-                "новый веб хук",
-            };
+            "добав вебхук",
+            "новый вебхук",
+            "добав webhook",
+            "новый webhook",
+            "добав веб хук",
+            "новый веб хук",
+        };
 
-            var requestString = request.Request.Nlu.Tokens;
-            return keywords.Any(kw =>
-            {
-                var tokens = kw.Split(" ");
-                return tokens.All(requestString.ContainsStartWith);
-            });
+        protected override bool CheckState(State state)
+        {
+            return state.Step == Step.None;
         }
 
         protected override SimpleResponse Respond(AliceRequest request, State state)
@@ -33,7 +26,9 @@ namespace AliceHook.Engine.Modifiers
             state.Step = Step.AwaitForUrl;
             return new SimpleResponse
             {
-                Text = "Введи Url вебхука"
+                Text = "Введи URL вебхука:",
+                Tts = "Введи URL вэбх+ука",
+                Buttons = new []{ "Отмена", "Помощь", "Выход" }
             };
         }
     }

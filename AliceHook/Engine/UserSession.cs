@@ -4,7 +4,6 @@ using System.Linq;
 using AliceHook.Engine.Modifiers;
 using AliceHook.Models;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace AliceHook.Engine
 {
@@ -13,6 +12,9 @@ namespace AliceHook.Engine
         private static readonly List<ModifierBase> Modifiers = new List<ModifierBase>
         {
             new ModifierEnter(),
+            new ModifierHelp(),
+            new ModifierExit(),
+            new ModifierCancel(),
             new ModifierAddWebhook(),
             new ModifierAddPhrase(),
             new ModifierFinalWebhook(),
@@ -37,7 +39,7 @@ namespace AliceHook.Engine
             }
 
             _state.User = user;
-            Console.WriteLine("User Loaded: " + JsonConvert.SerializeObject(_state.User));
+            // Console.WriteLine("User Loaded: " + JsonConvert.SerializeObject(_state.User));
         }
 
         public AliceResponse HandleRequest(AliceRequest aliceRequest)

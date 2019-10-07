@@ -17,7 +17,7 @@ namespace AliceHook.Engine.Modifiers
             return true;
         }
 
-        private AliceResponse CreateResponse(AliceRequest request, State state)
+        protected  virtual AliceResponse CreateResponse(AliceRequest request, State state)
         {
             var response = new AliceResponse(request);
             var simple = Respond(request, state);
