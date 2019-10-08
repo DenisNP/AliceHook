@@ -10,6 +10,7 @@ namespace AliceHook.Engine.Modifiers
         {
             return state.Step == Step.None 
                    && request.Request.Command.ToLower().StartsWith("удали") 
+                   && request.Request.Nlu.Tokens.Count > 1
                    && GetWebhook(request, state) != null;
         }
 
@@ -24,15 +25,16 @@ namespace AliceHook.Engine.Modifiers
 
             return new SimpleResponse
             {
-                Text = $"Удален вебхук: {w.Phrase}. Что теперь?",
-                Tts = $"Удалён вэбх+ук: {w.Phrase}. Что теперь?",
+                Text = $"Удален вебхук: {w.Phrase.CapitalizeFirst()}. Что теперь?",
+                Tts = $"Удалён вэбх+ук: {w.Phrase.CapitalizeFirst()}. Что теперь?",
                 Buttons = new []{ "Добавить вебхук", "Список", "Помощь", "Выход" }
             };
         }
 
         private Webhook GetWebhook(AliceRequest request, State state)
         {
-            return state.User.Webhooks.FirstOrDefault(w => request.Request.Command.Contains(w.Phrase));
+            var trimmedCommand = request.Request.Nlu.Tokens.Skip(1).Join(" ").ToLower().Trim();
+            return state.User.FindWebhook(trimmedCommand);
         }
     }
 }

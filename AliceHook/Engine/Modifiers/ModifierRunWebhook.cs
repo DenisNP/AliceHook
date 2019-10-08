@@ -15,10 +15,15 @@ namespace AliceHook.Engine.Modifiers
         protected override SimpleResponse Respond(AliceRequest request, State state)
         {
             var webhook = GetWebhook(request, state);
+            var skipCount = webhook.Phrase.Split(" ").Length;
+            var textToSend = request.Request.Nlu.Tokens.Skip(skipCount).Join(" ").CapitalizeFirst();
+            
             using var client = new HttpClient();
             var data = new FormUrlEncodedContent(new Dictionary<string, string>
             {
-                {"value1", request.Request.Command}
+                { "value1", textToSend },
+                { "value2", request.Request.Command.CapitalizeFirst() }, // full command
+                { "value3", request.Request.OriginalUtterance }
             });
             client.PostAsync(webhook.Url, data).Wait();
 
@@ -32,7 +37,7 @@ namespace AliceHook.Engine.Modifiers
         private Webhook GetWebhook(AliceRequest request, State state)
         {
             var requestCommand = request.Request.Command.ToLower().Trim();
-            return state.User.Webhooks.FirstOrDefault(w => requestCommand.StartsWith(w.Phrase));
+            return state.User.FindWebhook(requestCommand);
         }
     }
 }
