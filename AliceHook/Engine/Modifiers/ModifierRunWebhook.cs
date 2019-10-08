@@ -25,11 +25,12 @@ namespace AliceHook.Engine.Modifiers
                 { "value2", request.Request.Command.CapitalizeFirst() }, // full command
                 { "value3", request.Request.OriginalUtterance }
             });
-            client.PostAsync(webhook.Url, data).Wait();
+            var httpResponse = client.PostAsync(webhook.Url, data).Result;
+            var body = httpResponse.Content.ReadAsStringAsync().Result;
 
             return new SimpleResponse
             {
-                Text = "Выполнено!",
+                Text = body.IsNullOrEmpty() ? "Выполнено!" : body,
                 Buttons = new []{ "Список", "Помощь", "Выход" }
             };
         }

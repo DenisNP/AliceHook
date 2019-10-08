@@ -26,6 +26,11 @@ namespace AliceHook
             return s.Substring(0, length);
         }
 
+        public static bool IsNullOrEmpty(this string s)
+        {
+            return string.IsNullOrEmpty(s);
+        }
+
         public static string Join(this IEnumerable<string> list, string separator)
         {
             return string.Join(separator, list);
