@@ -19,6 +19,16 @@ namespace AliceHook.Engine.Modifiers
         
         protected override SimpleResponse Respond(AliceRequest request, State state)
         {
+            if (state.Step == Step.AwaitForKeyword)
+            {
+                return new SimpleResponse
+                {
+                    Text = "Эта ключевая фраза пересекается с одной из команд данного навыка. Выберите, " +
+                           "пожалуйста, другую.",
+                    Buttons = new []{ "Отмена", "Помощь", "Выход" }
+                };
+            }
+            
             if (state.User.Webhooks.Count == 0)
             {
                 return new SimpleResponse
@@ -46,7 +56,7 @@ namespace AliceHook.Engine.Modifiers
         
         protected override bool CheckState(State state)
         {
-            return state.Step == Step.None;
+            return state.Step == Step.None || state.Step == Step.AwaitForKeyword;
         }
     }
 }

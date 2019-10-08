@@ -11,6 +11,18 @@ namespace AliceHook.Engine.Modifiers
 
         protected override SimpleResponse Respond(AliceRequest request, State state)
         {
+            var exists = state.User.FindWebhook(request.Request.Command.ToLower().Trim());
+            if (exists != null)
+            {
+                return new SimpleResponse
+                {
+                    Text = $"У вас уже есть вебхук с похожей ключевой фразой: {exists.Phrase.CapitalizeFirst()}. " +
+                           $"Назовите другую фразу.",
+                    Tts = $"У вас уже есть вэбхук с похожей ключевой фразой: {exists.Phrase}. Назовите другую фразу.",
+                    Buttons = new []{ "Отмена", "Помощь", "Выход" }
+                };
+            }
+
             var webhook = new Webhook
             {
                 Phrase = request.Request.Command,
