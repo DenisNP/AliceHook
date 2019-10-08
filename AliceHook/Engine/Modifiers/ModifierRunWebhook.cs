@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -25,14 +26,28 @@ namespace AliceHook.Engine.Modifiers
                 { "value2", request.Request.Command.CapitalizeFirst() }, // full command
                 { "value3", request.Request.OriginalUtterance }
             });
-            var httpResponse = client.PostAsync(webhook.Url, data).Result;
-            var body = httpResponse.Content.ReadAsStringAsync().Result;
-
-            return new SimpleResponse
+            
+            try
             {
-                Text = body.IsNullOrEmpty() ? "Выполнено!" : body,
-                Buttons = new []{ "Список", "Помощь", "Выход" }
-            };
+
+                var httpResponse = client.PostAsync(webhook.Url, data).Result;
+                var body = httpResponse.Content.ReadAsStringAsync().Result;
+
+                return new SimpleResponse
+                {
+                    Text = body.IsNullOrEmpty() ? "Выполнено!" : body,
+                    Buttons = new []{ "Список", "Помощь", "Выход" }
+                };
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new SimpleResponse
+                {
+                    Text = "С вызовом произошла ошибка.",
+                    Buttons = new []{ "Список", "Помощь", "Выход" }
+                };
+            }
         }
 
         private Webhook GetWebhook(AliceRequest request, State state)
