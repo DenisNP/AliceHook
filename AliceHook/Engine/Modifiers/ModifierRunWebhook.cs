@@ -29,7 +29,6 @@ namespace AliceHook.Engine.Modifiers
             
             try
             {
-
                 var httpResponse = client.PostAsync(webhook.Url, data).Result;
                 var body = httpResponse.Content.ReadAsStringAsync().Result;
 
