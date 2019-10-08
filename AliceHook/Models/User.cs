@@ -15,7 +15,7 @@ namespace AliceHook.Models
             return Webhooks.FirstOrDefault(w =>
             {
                 var startPhrase = phrase.SafeSubstring(w.Phrase.Length);
-                return Utils.LevenshteinRatio(startPhrase, phrase) >= 0.85;
+                return Utils.LevenshteinRatio(startPhrase, phrase) < 0.15;
             });
         }
     }
