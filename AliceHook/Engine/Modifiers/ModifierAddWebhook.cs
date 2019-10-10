@@ -23,7 +23,7 @@ namespace AliceHook.Engine.Modifiers
 
         protected override SimpleResponse Respond(AliceRequest request, State state)
         {
-            if (state.User.Webhooks.Count >= 10)
+            if (state.User.Webhooks.Count >= 20)
             {
                 return new SimpleResponse
                 {
