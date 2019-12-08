@@ -12,7 +12,7 @@ namespace AliceHook.Engine.Modifiers
                 response = null;
                 return false;
             }
-
+            
             response = CreateResponse(request, state);
             return true;
         }
@@ -21,6 +21,11 @@ namespace AliceHook.Engine.Modifiers
         {
             var response = new AliceResponse(request);
             var simple = Respond(request, state);
+
+            if (simple.IsAuthorize)
+            {
+                return response.ToAuthorizationResponse();
+            }
 
             response.Response.Text = simple.Text;
             response.Response.Tts = string.IsNullOrEmpty(simple.Tts) ? simple.Text : simple.Tts;

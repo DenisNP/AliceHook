@@ -23,6 +23,15 @@ namespace AliceHook.Engine.Modifiers
 
         protected override SimpleResponse Respond(AliceRequest request, State state)
         {
+            if (!request.HasScreen())
+            {
+                return new SimpleResponse
+                {
+                    Text = "Добавлять вебхуки можно только на устройстве с экраном",
+                    Tts = "Добавлять вэбх+уки можно только на устройстве с экраном"
+                };
+            }
+            
             if (state.User.Webhooks.Count >= 20)
             {
                 return new SimpleResponse

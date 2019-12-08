@@ -25,7 +25,8 @@ namespace AliceHook.Controllers
             ContractResolver = new DefaultContractResolver
             {
                 NamingStrategy = new SnakeCaseNamingStrategy()
-            }
+            },
+            NullValueHandling = NullValueHandling.Ignore
         };
         
         [HttpGet]
@@ -44,12 +45,44 @@ namespace AliceHook.Controllers
 
             var aliceRequest = JsonConvert.DeserializeObject<AliceRequest>(body, ConverterSettings);
             var userId = aliceRequest.Session.UserId;
-            var session = Sessions.GetOrAdd(userId, uid => new UserSession(uid));
+            var token = ExtractToken(Request);
 
+            if (token.IsNullOrEmpty() && !aliceRequest.HasScreen())
+            {
+                // auth needed
+                var authResponse = new AliceResponse(aliceRequest).ToAuthorizationResponse();
+                var stringAuthResponse = JsonConvert.SerializeObject(authResponse, ConverterSettings);
+                return Response.WriteAsync(stringAuthResponse);
+            } 
+            
+            var session = GetOrCreateSession(userId, token, aliceRequest.HasScreen());
             var aliceResponse = session.HandleRequest(aliceRequest);
             var stringResponse = JsonConvert.SerializeObject(aliceResponse, ConverterSettings);
             
             return Response.WriteAsync(stringResponse);
+        }
+
+        private static UserSession GetOrCreateSession(string uid, string token, bool hasScreen)
+        {
+            UserSession s = null;
+            if (Sessions.ContainsKey(uid))
+            {
+                s = Sessions[uid];
+                // check token
+                if (s.Token != token/* && !hasScreen*/)
+                {
+                    Sessions.TryRemove(uid, out _);
+                    s = null;
+                }
+            }
+
+            if (s == null)
+            {
+                s = new UserSession(uid, token, hasScreen);
+                Sessions.TryAdd(uid, s);
+            }
+
+            return s;
         }
 
         private static void CreateTimer()
@@ -63,6 +96,20 @@ namespace AliceHook.Controllers
                     new TimeSpan(0, 10, 0)
                 );
             }
+        }
+        
+        private static string ExtractToken(HttpRequest request)
+        {
+            var token = request.Headers.ContainsKey("Authorization")
+                ? request.Headers["Authorization"].ToString()
+                : "";
+
+            if (!token.IsNullOrEmpty())
+            {
+                token = token.Replace("Bearer ", "");
+            }
+
+            return token;
         }
 
         private static void RemoveOldSessions(object state)

@@ -20,11 +20,11 @@ namespace AliceHook.Engine.Modifiers
                 {
                     Text = "Слушаю",
                     Tts = "Слушаю",
-                    Buttons = new []{ "Добавить вебхук", "Список", "Помощь", "Выход" }
+                    Buttons = new []{ "Добавить вебхук", "Список", "Авторизация", "Помощь", "Выход" }
                 };
             }
-
-            return ModifierHelp.GetHelp(Step.None);
+            
+            return ModifierHelp.GetHelp(Step.None, request.HasScreen());
         }
     }
 }

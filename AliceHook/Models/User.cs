@@ -8,6 +8,7 @@ namespace AliceHook.Models
     {
         [Key]
         public string Id { get; set; }
+        public string Token { get; set; }
         public List<Webhook> Webhooks { get; set; } = new List<Webhook>();
 
         public Webhook FindWebhook(string phrase)

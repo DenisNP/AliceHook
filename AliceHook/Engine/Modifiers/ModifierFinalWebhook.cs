@@ -6,7 +6,7 @@ namespace AliceHook.Engine.Modifiers
     {
         protected override bool Check(AliceRequest request, State state)
         {
-            return state.Step == Step.AwaitForKeyword;
+            return state.Step == Step.AwaitForKeyword && request.HasScreen();
         }
 
         protected override SimpleResponse Respond(AliceRequest request, State state)
@@ -17,7 +17,7 @@ namespace AliceHook.Engine.Modifiers
                 return new SimpleResponse
                 {
                     Text = $"У вас уже есть вебхук с похожей ключевой фразой: {exists.Phrase.CapitalizeFirst()}. " +
-                           $"Назовите другую фразу.",
+                           "Назовите другую фразу.",
                     Tts = $"У вас уже есть вэбхук с похожей ключевой фразой - {exists.Phrase} - - Назовите другую фразу.",
                     Buttons = new []{ "Отмена", "Помощь", "Выход" }
                 };
@@ -39,12 +39,12 @@ namespace AliceHook.Engine.Modifiers
             return new SimpleResponse
             {
                 Text = $"Теперь, когда вы скажете фразу, которая начинается на \"{webhook.Phrase.CapitalizeFirst()}" +
-                       $"\", я вызову этот адрес и передам туда весь ваш текст в параметр value1.\n\nЧто делаем дальше?",
+                       "\", я вызову этот адрес и передам туда весь ваш текст в параметр value1.\n\nЧто делаем дальше?",
                 
                 Tts = $"Теперь, когда вы скажете фразу, которая начинается на - \"{webhook.Phrase}\" -, я вызову этот " +
-                       $"адрес и передам туда весь ваш текст в параметр value 1. - - - Что делаем дальше?",
+                       "адрес и передам туда весь ваш текст в параметр value 1. - - - Что делаем дальше?",
                 
-                Buttons = new []{ "Список", "Помощь", "Выход" }
+                Buttons = new []{ "Список", "Авторизация", "Помощь", "Выход" }
             };
         }
     }

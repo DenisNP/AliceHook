@@ -12,10 +12,13 @@ namespace AliceHook.Engine
         private DateTime _lastActive;
         private static readonly List<ModifierBase> Modifiers = new List<ModifierBase>
         {
+            new ModifierAuthFinished(),
+            new ModifierNeedAuth(),
             new ModifierEnter(),
             new ModifierHelp(),
             new ModifierExit(),
             new ModifierList(),
+            new ModifierAuthorize(),
             new ModifierCancel(),
             new ModifierDelete(),
             new ModifierAddWebhook(),
@@ -27,19 +30,31 @@ namespace AliceHook.Engine
         
         private readonly State _state = new State();
 
-        public UserSession(string userId)
+        public UserSession(string userId, string token, bool hasScreen)
         {
             _lastActive = DateTime.Now;
-            
+            User user = null;
             using var db = new DatabaseContext();
-            var user = db.Users.Include(u => u.Webhooks).FirstOrDefault(u => u.Id == userId);
-            if (user == null)
+            
+            if (hasScreen)
+            { 
+                user = db.Users.Include(u => u.Webhooks).FirstOrDefault(u => u.Id == userId);
+            } 
+            else if (!token.IsNullOrEmpty())
             {
-                user = new User
-                {
-                    Id = userId
-                };
+                user = db.Users.Include(u => u.Webhooks).FirstOrDefault(u => u.Token == token);
+            }
+
+            if (user == null && hasScreen)
+            {
+                user = new User { Id = userId, Token = token };
                 db.Users.Add(user);
+                db.SaveChanges();
+            }
+            else if (hasScreen && user.Token != token)
+            {
+                user.Token = token;
+                db.Users.Update(user);
                 db.SaveChanges();
             }
 
@@ -62,5 +77,7 @@ namespace AliceHook.Engine
         {
             return (DateTime.Now - _lastActive) > new TimeSpan(1, 0, 0);
         }
+
+        public string Token => _state?.User?.Token ?? "";
     }
 }

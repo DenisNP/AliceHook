@@ -17,6 +17,16 @@ namespace AliceHook.Engine.Modifiers
         protected override SimpleResponse Respond(AliceRequest request, State state)
         {
             var w = GetWebhook(request, state);
+
+            if (w == null)
+            {
+                return new SimpleResponse
+                {
+                    Text = "Не могу найти вебхук по вашему запросу. Что хотите сделать сейчас?",
+                    Tts = "Не могу найти бэбх+ук по вашему запросу. Что хотите сделать сейчас?",
+                    Buttons = new []{ "Добавить вебхук", "Список", "Авторизация", "Помощь", "Выход" }
+                };
+            }
             
             using var db = new DatabaseContext();
             db.Remove(w);
@@ -27,7 +37,7 @@ namespace AliceHook.Engine.Modifiers
             {
                 Text = $"Удален вебхук: {w.Phrase.CapitalizeFirst()}. Что теперь?",
                 Tts = $"Удалён вэбх+ук: {w.Phrase.CapitalizeFirst()}. Что теперь?",
-                Buttons = new []{ "Добавить вебхук", "Список", "Помощь", "Выход" }
+                Buttons = new []{ "Добавить вебхук", "Список", "Авторизация", "Помощь", "Выход" }
             };
         }
 

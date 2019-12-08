@@ -11,7 +11,7 @@ namespace AliceHook.Engine.Modifiers
 
         protected override SimpleResponse Respond(AliceRequest request, State state)
         {
-            return ModifierHelp.GetHelp(state.Step);
+            return ModifierHelp.GetHelp(state.Step, request.HasScreen());
         }
     }
 }

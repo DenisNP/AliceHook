@@ -2,13 +2,13 @@ using System.Collections.Generic;
 
 namespace AliceHook.Models
 {
-    public class Screen
+    public class AliceEmpty
     {
     }
 
     public class Interfaces
     {
-        public Screen Screen { get; set; }
+        public AliceEmpty Screen { get; set; }
     }
 
     public class Meta
@@ -65,8 +65,19 @@ namespace AliceHook.Models
     public class AliceRequest
     {
         public Meta Meta { get; set; }
+        public AliceEmpty AccountLinkingCompleteEvent { get; set; }
         public Request Request { get; set; }
         public Session Session { get; set; }
         public string Version { get; set; }
+
+        public bool HasScreen()
+        {
+            return Meta?.Interfaces?.Screen != null;
+        }
+        
+        public bool IsAccountLinking()
+        {
+            return AccountLinkingCompleteEvent != null;
+        }
     }
 }

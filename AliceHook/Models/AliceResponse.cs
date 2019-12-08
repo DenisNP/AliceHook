@@ -20,6 +20,7 @@ namespace AliceHook.Models
 
     public class AliceResponse
     {
+        public AliceEmpty StartAccountLinking { get; set; }
         public Response Response { get; set; } = new Response();
         public Session Session { get; set; }
         public string Version { get; set; }
@@ -28,6 +29,13 @@ namespace AliceHook.Models
         {
             Session = request.Session;
             Version = request.Version;
+        }
+        
+        public AliceResponse ToAuthorizationResponse()
+        {
+            Response = null;
+            StartAccountLinking = new AliceEmpty();
+            return this;
         }
     }
 }
