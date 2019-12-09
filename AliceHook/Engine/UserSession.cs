@@ -4,6 +4,7 @@ using System.Linq;
 using AliceHook.Engine.Modifiers;
 using AliceHook.Models;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace AliceHook.Engine
 {
@@ -36,20 +37,31 @@ namespace AliceHook.Engine
             User user = null;
             using var db = new DatabaseContext();
             
-            if (hasScreen)
-            { 
-                user = db.Users.Include(u => u.Webhooks).FirstOrDefault(u => u.Id == userId);
-            } 
-            else if (!token.IsNullOrEmpty())
+            if (!token.IsNullOrEmpty())
             {
                 user = db.Users.Include(u => u.Webhooks).FirstOrDefault(u => u.Token == token);
+                if (user != null && user.Id != userId)
+                {
+                    var userById = db.Users.Include(u => u.Webhooks).FirstOrDefault(u => u.Id == userId);
+                    if (userById != null)
+                    {
+                        user.Webhooks.AddRange(userById.Webhooks);
+                        db.Users.Update(user);
+                        db.Users.Remove(userById);
+                        db.SaveChanges();
+                    }
+                }
             }
 
             if (user == null && hasScreen)
             {
-                user = new User { Id = userId, Token = token };
-                db.Users.Add(user);
-                db.SaveChanges();
+                user = db.Users.Include(u => u.Webhooks).FirstOrDefault(u => u.Id == userId);
+                if (user == null)
+                {
+                    user = new User {Id = userId, Token = token};
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                }
             }
             else if (hasScreen && user.Token != token)
             {
@@ -57,6 +69,8 @@ namespace AliceHook.Engine
                 db.Users.Update(user);
                 db.SaveChanges();
             }
+
+            Console.WriteLine(JsonConvert.SerializeObject(user));
 
             _state.User = user;
             // Console.WriteLine("User Loaded: " + JsonConvert.SerializeObject(_state.User));

@@ -47,6 +47,9 @@ namespace AliceHook.Controllers
             var userId = aliceRequest.Session.UserId;
             var token = ExtractToken(Request);
 
+            Console.WriteLine(JsonConvert.SerializeObject(aliceRequest, ConverterSettings));
+            Console.WriteLine("Token: " + token);
+
             if (token.IsNullOrEmpty() && !aliceRequest.HasScreen())
             {
                 // auth needed
@@ -58,6 +61,8 @@ namespace AliceHook.Controllers
             var session = GetOrCreateSession(userId, token, aliceRequest.HasScreen());
             var aliceResponse = session.HandleRequest(aliceRequest);
             var stringResponse = JsonConvert.SerializeObject(aliceResponse, ConverterSettings);
+
+            Console.WriteLine(stringResponse);
             
             return Response.WriteAsync(stringResponse);
         }

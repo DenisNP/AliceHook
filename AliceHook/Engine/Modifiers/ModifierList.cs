@@ -35,22 +35,41 @@ namespace AliceHook.Engine.Modifiers
                 {
                     Text = "У вас пока нет вебхуков. Самое время добавить.",
                     Tts = "У вас пока нет вэбх+уков. Самое время добавить.",
-                    Buttons = new[] {"Добавить вебхук", "Авторизация", "Помощь", "Выход"}
+                    Buttons = state.User.Token.IsNullOrEmpty()
+                        ? new []{ "Добавить вебхук", "Авторизация", "Помощь", "Выход" }
+                        : new []{ "Добавить вебхук", "Помощь", "Выход" }
                 };
             }
 
             var removeFirst = $"Удалить {state.User.Webhooks.First().Phrase.CapitalizeFirst()}";
             var list = state.User.Webhooks.Select(w => "• " + w.Phrase + ": " + w.Url);
+
+            if (request.HasScreen())
+            {
+                return new SimpleResponse
+                {
+                    Text = $"Вывела на экран ваши вебхуки:\n\n {list.Join("\n")}\n\nДля удаления скажите" +
+                           $" \"Удалить\" и ключевую фразу. Например: \"{removeFirst}\"",
+
+                    Tts =
+                        $"Вывела на экран ваши вэбх+уки. Для удаления скаж+ите - - \"Удалить\" - - и ключевую фразу. " +
+                        $"Например - - {removeFirst}",
+
+                    Buttons = new[] {removeFirst, "Помощь", "Выход"}
+                };
+            }
             
+            // no screen
+            var wCount = state.User.Webhooks.Count.ToPhrase(
+                "ключевая фраза",
+                "ключевые фразы",
+                "ключевых фраз"
+            );
+            var tts = $"У вас {wCount}: " + state.User.Webhooks.Select(w => w.Phrase).Join(" - - ");
             return new SimpleResponse
             {
-                Text = $"Вывела на экран ваши вебхуки:\n\n {string.Join("\n", list)}\n\nДля удаления скажите" +
-                       $" \"Удалить\" и ключевую фразу. Например: \"{removeFirst}\"",
-                
-                Tts = $"Вывела на экран ваши вэбх+уки. Для удаления скаж+ите - - \"Удалить\" - - и ключевую фразу. " +
-                      $"Например - - {removeFirst}",
-                
-                Buttons = new[] {removeFirst, "Помощь", "Выход"}
+                Text = tts,
+                Tts = tts
             };
         }
         
