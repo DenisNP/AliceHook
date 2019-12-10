@@ -11,6 +11,16 @@ namespace AliceHook.Engine.Modifiers
 
         protected override SimpleResponse Respond(AliceRequest request, State state)
         {
+            if (state.User == null || state.User.Token.IsNullOrEmpty())
+            {
+                return new SimpleResponse
+                {
+                    Text = "Авторизация отменена пользователем. Что хотите сделать сейчас?",
+                    Tts = "Авторизация отменена пользователем. Что хотите сделать сейчас?",
+                    Buttons = new []{ "Добавить вебхук", "Список", "Авторизация", "Помощь", "Выход" }
+                };
+            }
+            
             if (!request.HasScreen())
             {
                 // device without screen
