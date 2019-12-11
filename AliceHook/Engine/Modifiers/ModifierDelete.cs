@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Text.RegularExpressions;
 using AliceHook.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -47,7 +48,12 @@ namespace AliceHook.Engine.Modifiers
 
         private Webhook GetWebhook(AliceRequest request, State state)
         {
-            var trimmedCommand = request.Request.Nlu.Tokens.Skip(1).Join(" ").ToLower().Trim();
+            var tokens = Regex.Split(request.Request.Command.ToLower(), "\\s+");
+            if (tokens.Length <= 1)
+            {
+                return null;
+            }
+            var trimmedCommand = tokens.Skip(1).Join(" ").Trim();
             return state.User.FindWebhook(trimmedCommand);
         }
     }
