@@ -94,12 +94,17 @@ namespace AliceHook.Engine
             }
             catch (Exception e)
             {
+                Console.WriteLine("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ERROR");
                 Console.WriteLine(e);
-                response = new AliceResponse(aliceRequest);
-                response.Response = new Response
+                response = new AliceResponse(aliceRequest)
                 {
-                    Text = "Произошла какая-то ошибка на сервере навыка, разработчик уже уведомлён. Приносим извинения."
+                    Response = new Response
+                    {
+                        Text = "Произошла какая-то ошибка на сервере навыка, разработчик уже уведомлён. " +
+                               "Приносим извинения."
+                    }
                 };
+                Console.WriteLine("");
             }
 
             return response;
