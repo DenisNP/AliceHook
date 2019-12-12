@@ -86,9 +86,22 @@ namespace AliceHook.Engine
             _lastActive = DateTime.Now;
             
             AliceResponse response = null;
-            if (!Modifiers.Any(modifier => modifier.Run(aliceRequest, _state, out response))) {
-                throw new NotSupportedException("No default modifier");
+            try
+            {
+                if (!Modifiers.Any(modifier => modifier.Run(aliceRequest, _state, out response))) {
+                    throw new NotSupportedException("No default modifier");
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                response = new AliceResponse(aliceRequest);
+                response.Response = new Response
+                {
+                    Text = "Произошла какая-то ошибка на сервере навыка, разработчик уже уведомлён. Приносим извинения."
+                };
+            }
+
             return response;
         }
 
