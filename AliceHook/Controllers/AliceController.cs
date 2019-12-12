@@ -54,7 +54,7 @@ namespace AliceHook.Controllers
             var userId = aliceRequest.Session.UserId;
             var token = ExtractToken(Request);
 
-            Console.WriteLine(JsonConvert.SerializeObject(aliceRequest, ConverterSettings));
+            Console.WriteLine($"REQUEST FROM {userId}:\n{body}\n");
 
             if (token.IsNullOrEmpty() && !aliceRequest.HasScreen())
             {
@@ -68,7 +68,7 @@ namespace AliceHook.Controllers
             var aliceResponse = session.HandleRequest(aliceRequest);
             var stringResponse = JsonConvert.SerializeObject(aliceResponse, ConverterSettings);
 
-            Console.WriteLine(stringResponse);
+            Console.WriteLine($"RESPONSE:\n{stringResponse}\n");
             
             return Response.WriteAsync(stringResponse);
         }

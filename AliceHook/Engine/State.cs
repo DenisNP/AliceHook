@@ -7,11 +7,25 @@ namespace AliceHook.Engine
         public User User { get; set; }
         public Step Step { get; set; } = Step.None;
         public string TempUrl { get; set; }
+        public string LastResult { get; set; }
+        public string LastError { get; set; }
 
         public void Clear()
         {
             Step = Step.None;
             TempUrl = "";
+            ClearLastResult();
+        }
+
+        public bool HasLastResult()
+        {
+            return !LastResult.IsNullOrEmpty() || !LastError.IsNullOrEmpty();
+        }
+
+        public void ClearLastResult()
+        {
+            LastResult = "";
+            LastError = "";
         }
     }
 
