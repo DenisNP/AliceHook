@@ -13,11 +13,7 @@ namespace AliceHook
 
         public static string CapitalizeFirst(this string s)
         {
-            if (s.IsNullOrEmpty())
-            {
-                return "";
-            }
-            return s.Substring(0, 1).ToUpper() + s.Substring(1);
+            return s.IsNullOrEmpty() ? "" : s.Substring(0, 1).ToUpper() + s.Substring(1);
         }
 
         public static string SafeSubstring(this string s, int length)

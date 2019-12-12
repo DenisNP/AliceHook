@@ -42,12 +42,13 @@ namespace AliceHook.Engine
             if (!token.IsNullOrEmpty())
             {
                 user = db.Users.Include(u => u.Webhooks).FirstOrDefault(u => u.Token == token);
+                Console.WriteLine($"==== token is not null, user found: {user != null}\n");
                 if (user != null && user.Id != userId)
                 {
                     var userById = db.Users.Include(u => u.Webhooks).FirstOrDefault(u => u.Id == userId);
                     if (userById != null)
                     {
-                        Console.WriteLine("==== user is different, move webhooks to old\n");
+                        Console.WriteLine("==== user id is different, move webhooks to old\n");
                         user.Webhooks.AddRange(userById.Webhooks);
                         db.Users.Update(user);
                         db.Users.Remove(userById);
@@ -59,7 +60,7 @@ namespace AliceHook.Engine
             if (user == null && hasScreen)
             {
                 user = db.Users.Include(u => u.Webhooks).FirstOrDefault(u => u.Id == userId);
-                Console.WriteLine($"==== user by token is null, screen, found by id: {user == null}\n");
+                Console.WriteLine($"==== user by token is null, screen, found by id: {user != null}\n");
                 
                 if (user == null)
                 {
