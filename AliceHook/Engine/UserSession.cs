@@ -36,6 +36,8 @@ namespace AliceHook.Engine
             _lastActive = DateTime.Now;
             User user = null;
             using var db = new DatabaseContext();
+
+            Console.WriteLine($"=== create session {userId}, token: {token}\n");
             
             if (!token.IsNullOrEmpty())
             {
@@ -45,6 +47,7 @@ namespace AliceHook.Engine
                     var userById = db.Users.Include(u => u.Webhooks).FirstOrDefault(u => u.Id == userId);
                     if (userById != null)
                     {
+                        Console.WriteLine("==== user is different, move webhooks to old\n");
                         user.Webhooks.AddRange(userById.Webhooks);
                         db.Users.Update(user);
                         db.Users.Remove(userById);
@@ -56,6 +59,8 @@ namespace AliceHook.Engine
             if (user == null && hasScreen)
             {
                 user = db.Users.Include(u => u.Webhooks).FirstOrDefault(u => u.Id == userId);
+                Console.WriteLine($"==== user by token is null, screen, found by id: {user == null}\n");
+                
                 if (user == null)
                 {
                     user = new User {Id = userId, Token = token};
@@ -65,6 +70,7 @@ namespace AliceHook.Engine
             }
             else if (hasScreen && user.Token != token)
             {
+                Console.WriteLine($"==== token is different, screen, update to new: {user.Token} > {token}\n");
                 user.Token = token;
                 db.Users.Update(user);
                 db.SaveChanges();

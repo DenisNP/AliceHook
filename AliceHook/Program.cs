@@ -22,13 +22,13 @@ namespace AliceHook
         {
             new WebHostBuilder()
                 .UseKestrel()
-#if DEBUG
+//if DEBUG
                 .ConfigureLogging(logging =>
                 {
                     logging.AddDebug();
                     logging.AddConsole();
                 })
-#endif                           
+//#endif                           
                 .UseStartup<Startup>()
                 .Build()
                 .Run();
