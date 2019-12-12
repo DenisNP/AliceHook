@@ -11,6 +11,29 @@ namespace AliceHook.Engine.Modifiers
 
         protected override SimpleResponse Respond(AliceRequest request, State state)
         {
+            if (state.Step == Step.None)
+            {
+                if (request.HasScreen())
+                {
+                    return new SimpleResponse
+                    {
+                        Text = "Команда не распознана. Вы можете добавить вебхук, посмотреть список ключевых " +
+                               "фраз или авторизоваться. Что хотите сделать?",
+                        Tts = "Команда не распознана. Вы можете добавить вэбх+ук, посмотреть список ключевых " +
+                              "фраз или авторизоваться. Что хотите сделать?",
+                        Buttons = new []{ "Добавить вебхук", "Список", "Авторизация", "Помощь", "Выход" }
+                    };
+                }
+                
+                // no screen
+                return new SimpleResponse
+                {
+                    Text = "Команда не распознана. Вы можете прослушать список ключевых фраз либо выйти. " +
+                           "Что хотите сделать?",
+                    Tts = "Команда не распознана. Вы можете прослушать список ключевых фраз либо выйти. " +
+                          "Что хотите сделать?"
+                };
+            }
             return ModifierHelp.GetHelp(state.Step, request.HasScreen());
         }
     }

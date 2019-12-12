@@ -48,7 +48,8 @@ namespace AliceHook.Engine.Modifiers
                 finally
                 {
                     var total = DateTime.Now - localStarted;
-                    Console.WriteLine($"Webhook {webhook.Phrase} {webhook.Url} finished in {total.TotalMilliseconds}ms\n");
+                    Console.WriteLine($"Webhook \"{webhook.Phrase}\" {webhook.Url} " +
+                                      $"was finished in {total.TotalMilliseconds}ms\n");
                 }
             });
 
