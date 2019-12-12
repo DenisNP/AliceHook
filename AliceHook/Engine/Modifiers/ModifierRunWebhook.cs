@@ -25,6 +25,7 @@ namespace AliceHook.Engine.Modifiers
 
             Task.Run(() =>
             {
+                var localStarted = DateTime.Now;
                 using var client = new HttpClient();
                 var data = new FormUrlEncodedContent(new Dictionary<string, string>
                 {
@@ -44,13 +45,18 @@ namespace AliceHook.Engine.Modifiers
                     Console.WriteLine(e);
                     state.LastError = e.ToString();
                 }
+                finally
+                {
+                    var total = DateTime.Now - localStarted;
+                    Console.WriteLine($"Webhook {webhook.Phrase} {webhook.Url} finished in {total.TotalMilliseconds}ms\n");
+                }
             });
 
             var started = DateTime.Now;
             while (true)
             {
                 var diff = DateTime.Now - started;
-                if (state.HasLastResult() ||  diff > new TimeSpan(0, 0, 0, 2000))
+                if (state.HasLastResult() ||  diff > new TimeSpan(0, 0, 0, 1800))
                 {
                     break;
                 }
