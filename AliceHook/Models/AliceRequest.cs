@@ -79,5 +79,15 @@ namespace AliceHook.Models
         {
             return AccountLinkingCompleteEvent != null;
         }
+
+        public bool IsPing()
+        {
+            if (Request == null)
+            {
+                return false;
+            }
+
+            return Request.Command.ToLower() == "ping";
+        }
     }
 }

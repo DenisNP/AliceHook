@@ -44,11 +44,17 @@ namespace AliceHook.Controllers
             var body = reader.ReadToEnd();
 
             var aliceRequest = JsonConvert.DeserializeObject<AliceRequest>(body, ConverterSettings);
+            if (aliceRequest.IsPing())
+            {
+                var pongResponse = new AliceResponse(aliceRequest).ToPong();
+                var stringPong = JsonConvert.SerializeObject(pongResponse, ConverterSettings);
+                return Response.WriteAsync(stringPong);
+            }
+            
             var userId = aliceRequest.Session.UserId;
             var token = ExtractToken(Request);
 
             Console.WriteLine(JsonConvert.SerializeObject(aliceRequest, ConverterSettings));
-            Console.WriteLine("Token: " + token);
 
             if (token.IsNullOrEmpty() && !aliceRequest.HasScreen())
             {

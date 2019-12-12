@@ -37,5 +37,14 @@ namespace AliceHook.Models
             StartAccountLinking = new AliceEmpty();
             return this;
         }
+
+        public AliceResponse ToPong()
+        {
+            Response = new Response
+            {
+                Text = "pong"
+            };
+            return this;
+        }
     }
 }

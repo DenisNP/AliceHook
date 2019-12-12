@@ -70,8 +70,6 @@ namespace AliceHook.Engine
                 db.SaveChanges();
             }
 
-            Console.WriteLine(JsonConvert.SerializeObject(user));
-
             _state.User = user;
             // Console.WriteLine("User Loaded: " + JsonConvert.SerializeObject(_state.User));
         }
