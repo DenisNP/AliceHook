@@ -19,7 +19,12 @@ namespace AliceHook.Engine.Modifiers
         {
             var webhook = GetWebhook(request, state);
             var skipCount = webhook.Phrase.Split(" ").Length;
-            var textToSend = request.Request.Nlu.Tokens.Skip(skipCount).Join(" ").CapitalizeFirst();
+            var textToSend = request.Request.Command
+                .ToLower()
+                .Split(" ")
+                .Skip(skipCount)
+                .Join(" ")
+                .CapitalizeFirst();
 
             state.ClearLastResult();
 

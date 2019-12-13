@@ -69,7 +69,8 @@ namespace AliceHook.Engine
                     db.SaveChanges();
                 }
             }
-            else if (hasScreen && user.Token != token)
+            
+            if (user != null && hasScreen && user.Token != token)
             {
                 Console.WriteLine($"==== token is different, screen, update to new: {user.Token} > {token}\n");
                 user.Token = token;
