@@ -113,5 +113,26 @@ namespace AliceHook
         {
             return num + " " + GetNumericPhrase(num, one, few, many);
         }
+
+        public static int OptimalSkipLength(string matchPhrase, string[] tokens)
+        {
+            var minDist = int.MaxValue;
+            var matchTokens = matchPhrase.Split(" ");
+            var matchShort = matchTokens.Join("");
+            var bestSkip = matchTokens.Length;
+                
+            for (var i = 1; i <= matchTokens.Length + 1; i++)
+            {
+                var secondString = tokens.Take(i).Join("");
+                var dist = LevenshteinDistance(matchShort, secondString);
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    bestSkip = i;
+                }
+            }
+
+            return bestSkip;
+        }
     }
 }

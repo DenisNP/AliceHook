@@ -18,13 +18,9 @@ namespace AliceHook.Engine.Modifiers
         protected override SimpleResponse Respond(AliceRequest request, State state)
         {
             var webhook = GetWebhook(request, state);
-            var skipCount = webhook.Phrase.Split(" ").Length;
-            var textToSend = request.Request.Command
-                .ToLower()
-                .Split(" ")
-                .Skip(skipCount)
-                .Join(" ")
-                .CapitalizeFirst();
+            var tokens = request.Request.Command.ToLower().Split(" ");
+            var skipCount = Utils.OptimalSkipLength(webhook.Phrase, tokens);
+            var textToSend = tokens.Skip(skipCount).Join(" ").CapitalizeFirst();
 
             state.ClearLastResult();
 
