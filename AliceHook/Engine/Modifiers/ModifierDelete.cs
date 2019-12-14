@@ -53,7 +53,7 @@ namespace AliceHook.Engine.Modifiers
             {
                 return null;
             }
-            var trimmedCommand = tokens.Skip(1).Join(" ").Trim();
+            var trimmedCommand = tokens.Skip(1).Join("").Trim();
             return state.User.FindWebhook(trimmedCommand);
         }
     }

@@ -95,7 +95,7 @@ namespace AliceHook.Engine.Modifiers
         private Webhook GetWebhook(AliceRequest request, State state)
         {
             var requestCommand = request.Request.Command.ToLower().Trim();
-            return state.User.FindWebhook(requestCommand);
+            return state.User.FindWebhook(requestCommand.Replace(" ", ""));
         }
     }
 }

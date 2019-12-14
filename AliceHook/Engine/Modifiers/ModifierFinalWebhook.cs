@@ -11,7 +11,13 @@ namespace AliceHook.Engine.Modifiers
 
         protected override SimpleResponse Respond(AliceRequest request, State state)
         {
-            var exists = state.User.FindWebhook(request.Request.Command.ToLower().Trim());
+            var exists = state.User.FindWebhook(
+                request.Request.Command
+                    .ToLower()
+                    .Trim()
+                    .Replace(" ", "")
+            );
+            
             if (exists != null)
             {
                 return new SimpleResponse
