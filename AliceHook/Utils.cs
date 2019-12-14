@@ -134,5 +134,24 @@ namespace AliceHook
 
             return bestSkip;
         }
+
+        public static double PossibleRatio(int len)
+        {
+            if (len <= 6)
+            {
+                return 0.15;
+            } 
+            if (len <= 10)
+            {
+                return 0.25;
+            }
+
+            if (len <= 15)
+            {
+                return 0.35;
+            }
+
+            return 0.4;
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace AliceHook.Models
             {
                 var shorten = w.Phrase.Replace(" ", "");
                 var startPhrase = phrase.SafeSubstring(shorten.Length);
-                return Utils.LevenshteinRatio(startPhrase, shorten) < 0.15;
+                return Utils.LevenshteinRatio(startPhrase, shorten) < Utils.PossibleRatio(shorten.Length);
             });
         }
     }
