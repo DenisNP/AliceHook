@@ -27,7 +27,12 @@ namespace AliceHook.Engine.Modifiers
             Task.Run(() =>
             {
                 var localStarted = DateTime.Now;
-                using var client = new HttpClient();
+                using var handler = new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback 
+                        = (message, certificate2, arg3, arg4) => true
+                };
+                using var client = new HttpClient(handler);
                 var data = new FormUrlEncodedContent(new Dictionary<string, string>
                 {
                     { "value1", textToSend },
