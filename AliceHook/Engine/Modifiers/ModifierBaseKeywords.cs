@@ -15,7 +15,7 @@ namespace AliceHook.Engine.Modifiers
             return CheckState(state) && CheckTokens(request);
         }
         
-        private bool CheckTokens(AliceRequest request)
+        protected bool CheckTokens(AliceRequest request)
         {
             return CheckTokens(request.Request.Nlu.Tokens, Keywords.ToArray());
         }

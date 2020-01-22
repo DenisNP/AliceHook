@@ -19,6 +19,7 @@ namespace AliceHook.Engine
             new ModifierHelp(),
             new ModifierExit(),
             new ModifierList(),
+            new ModifierExamplesList(),
             new ModifierAuthorize(),
             new ModifierCancel(),
             new ModifierDelete(),
