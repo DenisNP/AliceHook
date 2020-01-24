@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AliceHook.Models;
 
 namespace AliceHook.Engine.Modifiers
@@ -11,12 +12,34 @@ namespace AliceHook.Engine.Modifiers
             "помощ",
             "помог",
             "что ты умеешь",
-            "что делать"
+            "что делать",
+            "пример",
+            "например"
         };
 
         protected override bool CheckState(State state)
         {
             return true;
+        }
+
+        protected override AliceResponse CreateResponse(AliceRequest request, State state)
+        {
+            var response = base.CreateResponse(request, state);
+            if (state.Step == Step.None && request.HasScreen())
+            {
+                response.Response.Buttons.AddRange(
+                    Example.List().Select(
+                        x => new Button
+                        {
+                            Title = x.Title,
+                            Hide = false,
+                            Url = x.Link
+                        }
+                    )
+                );
+            }
+
+            return response;
         }
 
         protected override SimpleResponse Respond(AliceRequest request, State state)
@@ -46,19 +69,17 @@ namespace AliceHook.Engine.Modifiers
             {
                 Step.None => new SimpleResponse
                 {
-                    Text = "В этом навыке вы можете добавлять URL-адреса, на которые я буду отправлять POST-запросы. " +
-                           "Для каждого URL я предложу вам задать ключевую фразу. Сказали фразу — вызвался запрос. " +
-                           "Это позволит интегрироваться с сервисами автоматизации и интернета вещей, например IFTTT, " +
-                           "Zapier и Integromat.\n\nВы можете сразу добавить вебхук или посмотреть список примеров " +
-                           "по возможностям навыка. Что хотите сделать?",
+                    Text = "В этом навыке вы можете добавлять URL с ключевыми фразами. Сказали фразу — вызвался " +
+                           "POST-запрос на этот адрес. Это позволит интегрироваться с сервисами автоматизации и " +
+                           "интернета вещей, например IFTTT, Zapier и Integromat.\n\nСейчас вы можете добавить вебхук " +
+                           "или посмотреть список уже добавленных. Что хотите сделать?",
                     
-                    Tts = "В этом навыке вы можете добавлять URL-адрес+а, на которые я буду отправлять пост запросы. " +
-                          "Для каждого URL я предложу вам задать ключевую фразу. Сказали фразу — вызвался запрос. " +
-                          "Это позволит интегрироваться с сервисами автоматизации и интернета вещей, например иф три тэ, " +
-                          "Зэпиер и Интегромат - - Вы можете сразу добавить вэбх+ук или посмотреть список примеров " +
-                          "по возможностям навыка. Что хотите сделать?",
+                    Tts = "В этом навыке вы можете добавлять URL с ключевыми фразами. Сказали фразу — вызвался " +
+                          "пост-запрос на этот адрес. Это позволит интегрироваться с сервисами автоматизации и " +
+                          "интернета вещей, например иф три тэ, зэпиер и интегромат.\n\nСейчас вы можете добавить вэбх+ук " +
+                          "или посмотреть список уже добавленных. Что хотите сделать?",
                     
-                    Buttons = new []{ "Добавить вебхук", "Примеры", "Список вебхуков", "Авторизация", "Выход" }
+                    Buttons = new []{ "Добавить вебхук", "Список вебхуков", "Авторизация", "Выход" }
                 },
     
                 Step.AwaitForUrl => new SimpleResponse

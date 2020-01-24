@@ -33,7 +33,6 @@ namespace AliceHook.Engine
     {
         None,
         AwaitForUrl,
-        AwaitForKeyword,
-        Examples
+        AwaitForKeyword
     }
 }

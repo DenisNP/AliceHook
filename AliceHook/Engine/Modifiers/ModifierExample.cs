@@ -8,7 +8,7 @@ namespace AliceHook.Engine.Modifiers
     {
         protected override bool Check(AliceRequest request, State state)
         {
-            if (state.Step != Step.None || state.Step != Step.Examples)
+            if (state.Step != Step.None)
             {
                 return false;
             }
@@ -18,18 +18,13 @@ namespace AliceHook.Engine.Modifiers
             {
                 return true;
             }
-            
-            if (state.Step == Step.Examples)
-            {
-                state.Step = Step.None; // TODO change this behavior, check method shouldn't mutate state
-            }
 
             return false;
         }
 
         protected override SimpleResponse Respond(AliceRequest request, State state)
         {
-            throw new Exception("Method should not be invoked");
+            throw new NotSupportedException("Method should not be invoked");
         }
 
         protected override AliceResponse CreateResponse(AliceRequest request, State state)
@@ -38,8 +33,8 @@ namespace AliceHook.Engine.Modifiers
             var example = FindExample(request.Request.Command, state);
             state.Step = Step.None;
 
-            response.Response.Text = example.Description;
-            response.Response.Tts = example.DescriptionTts;
+            response.Response.Text = example.Description + " По кнопке подробная видеоинструкция о том, как это сделать.";
+            response.Response.Tts = example.DescriptionTts + " - По кнопке подробная видеоинструкция о том, как это сделать.";
             response.Response.Buttons = new List<Button>
             {
                 new Button
@@ -57,7 +52,7 @@ namespace AliceHook.Engine.Modifiers
         {
             foreach (var example in Example.List())
             {
-                if (example.Check(input, state.Step == Step.Examples))
+                if (example.Check(input))
                 {
                     return example;
                 }

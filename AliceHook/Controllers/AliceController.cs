@@ -83,7 +83,7 @@ namespace AliceHook.Controllers
                 if (s.Token != token/* && !hasScreen*/)
                 {
                     Sessions.TryRemove(uid, out _);
-                        Console.WriteLine($"=== remove session {uid}: old token = {s.Token}; new token = {token}\n");
+                    Console.WriteLine($"=== remove session {uid}: old token = {s.Token}; new token = {token}\n");
                     s = null;
                 }
             }
