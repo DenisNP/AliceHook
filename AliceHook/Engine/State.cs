@@ -33,6 +33,7 @@ namespace AliceHook.Engine
     {
         None,
         AwaitForUrl,
-        AwaitForKeyword
+        AwaitForKeyword,
+        AwaitWebhookResponse
     }
 }

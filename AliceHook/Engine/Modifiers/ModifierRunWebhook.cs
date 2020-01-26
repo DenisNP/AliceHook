@@ -87,13 +87,16 @@ namespace AliceHook.Engine.Modifiers
                     Text = "С вызовом произошла ошибка.",
                     Buttons = new []{ "Список", "Помощь", "Выход" }
                 };
-            } 
+            }
+
+            state.Step = Step.AwaitWebhookResponse;
             
             // weebhook too long
             return new SimpleResponse
             {
-                Text = "Вызов запущен в фоне из-за высокой длительности.",
-                Buttons = new[] {"Список", "Помощь", "Выход"}
+                Text = "Вебхук отвечает очень долго. Попробовать узнать результат сейчас?",
+                Tts = "Вэбх+ук отвечает очень долго. Попробовать узнать результат сейчас?",
+                Buttons = new[] {"Да", "Нет"}
             };
         }
 
