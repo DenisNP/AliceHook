@@ -9,7 +9,7 @@ namespace AliceHook.Engine.Modifiers
     {
         protected override bool Check(AliceRequest request, State state)
         {
-            if (state.Step != Step.None && !request.Request.Command.StartsWith("http"))
+            if (state.Step != Step.None || !request.Request.Command.StartsWith("http"))
             {
                 return false;
             }
