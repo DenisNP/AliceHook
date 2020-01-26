@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using AliceHook.Models;
 
@@ -34,12 +35,14 @@ namespace AliceHook.Engine.Modifiers
                 {"value3", "тестовый запрос — ключевая фраза"}
             });
 
-            client.PostAsync(url, data);
-            
+            var response = client.PostAsync(url, data).Result;
+
             // response
             return new SimpleResponse
             {
-                Text = "Отправила тестовый запрос на этот адрес. Что теперь?",
+                Text = response.StatusCode == HttpStatusCode.OK
+                    ? "Отправила тестовый запрос на этот адрес. Что теперь?"
+                    : "Какая-то ошибка в процессе вызова адреса. Статус ответа: " + response.StatusCode + ". Что дальше?",
                 Buttons = new []{ "Добавить вебхук", "Список", /*"Примеры,"*/ "Выход" }
             };
         }
