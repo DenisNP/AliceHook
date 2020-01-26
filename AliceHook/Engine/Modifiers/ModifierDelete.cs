@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using AliceHook.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace AliceHook.Engine.Modifiers
 {
@@ -26,8 +25,8 @@ namespace AliceHook.Engine.Modifiers
                     Text = "Не могу найти вебхук по вашему запросу. Что хотите сделать сейчас?",
                     Tts = "Не могу найти бэбх+ук по вашему запросу. Что хотите сделать сейчас?",
                     Buttons = state.User.Token.IsNullOrEmpty()
-                        ? new []{ "Добавить вебхук", "Примеры", "Список", "Авторизация", "Выход" }
-                        : new []{ "Добавить вебхук", "Примеры", "Список", "Выход" }
+                        ? new []{ "Добавить вебхук", /*"Примеры,"*/ "Список", "Авторизация", "Выход" }
+                        : new []{ "Добавить вебхук", /*"Примеры,"*/ "Список", "Выход" }
                 };
             }
             
@@ -41,8 +40,8 @@ namespace AliceHook.Engine.Modifiers
                 Text = $"Удален вебхук: {w.Phrase.CapitalizeFirst()}. Что теперь?",
                 Tts = $"Удалён вэбх+ук: {w.Phrase.CapitalizeFirst()}. Что теперь?",
                 Buttons = state.User.Token.IsNullOrEmpty()
-                    ? new []{ "Добавить вебхук", "Список", "Примеры", "Авторизация", "Выход" }
-                    : new []{ "Добавить вебхук", "Список", "Примеры", "Выход" }
+                    ? new []{ "Добавить вебхук", "Список", /*"Примеры,"*/ "Авторизация", "Выход" }
+                    : new []{ "Добавить вебхук", "Список", /*"Примеры,"*/ "Выход" }
             };
         }
 

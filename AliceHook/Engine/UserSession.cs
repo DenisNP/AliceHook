@@ -4,7 +4,6 @@ using System.Linq;
 using AliceHook.Engine.Modifiers;
 using AliceHook.Models;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace AliceHook.Engine
 {
@@ -16,6 +15,7 @@ namespace AliceHook.Engine
             new ModifierAuthFinished(),
             new ModifierNeedAuth(),
             new ModifierEnter(),
+            new ModifierTestRequest(),
             new ModifierExample(),
             new ModifierHelp(),
             new ModifierExit(),

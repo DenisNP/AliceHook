@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace AliceHook.Models
@@ -75,7 +76,7 @@ namespace AliceHook.Models
 
         public bool Check(string input)
         {
-            return input.ToLower() == Title.ToLower();
+            return string.Equals(input, Title, StringComparison.CurrentCultureIgnoreCase);
         }
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using AliceHook.Models;
 
 namespace AliceHook.Engine.Modifiers
@@ -25,7 +24,7 @@ namespace AliceHook.Engine.Modifiers
         protected override AliceResponse CreateResponse(AliceRequest request, State state)
         {
             var response = base.CreateResponse(request, state);
-            if (state.Step == Step.None && request.HasScreen())
+            /* if (state.Step == Step.None && request.HasScreen())
             {
                 response.Response.Buttons.AddRange(
                     Example.List().Select(
@@ -37,7 +36,7 @@ namespace AliceHook.Engine.Modifiers
                         }
                     )
                 );
-            }
+            } */
 
             return response;
         }
@@ -76,7 +75,7 @@ namespace AliceHook.Engine.Modifiers
                     
                     Tts = "В этом навыке вы можете добавлять URL с ключевыми фразами. Сказали фразу — вызвался " +
                           "пост-запрос на этот адрес. Это позволит интегрироваться с сервисами автоматизации и " +
-                          "интернета вещей, например иф три тэ, зэпиер и интегромат.\n\nСейчас вы можете добавить вэбх+ук " +
+                          "интернета вещей, например иф три тэ, з+эпиер и интегром+ат.\n\nСейчас вы можете добавить вэбх+ук " +
                           "или посмотреть список уже добавленных. Что хотите сделать?",
                     
                     Buttons = new []{ "Добавить вебхук", "Список вебхуков", "Авторизация", "Выход" }

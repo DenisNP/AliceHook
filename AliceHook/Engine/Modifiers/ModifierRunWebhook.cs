@@ -37,14 +37,14 @@ namespace AliceHook.Engine.Modifiers
                 {
                     { "value1", textToSend },
                     { "value2", request.Request.Command.CapitalizeFirst() }, // full command
-                    { "value3", request.Request.OriginalUtterance }
+                    { "value3", webhook.Phrase.ToLower() }
                 });
 
                 try
                 {
                     var httpResponse = client.PostAsync(webhook.Url, data).Result;
                     var body = httpResponse.Content.ReadAsStringAsync().Result;
-                    state.LastResult = body.IsNullOrEmpty() ? "Выполнено!" : $"Выполнено:\n{body}";
+                    state.LastResult = body.IsNullOrEmpty() ? "Выполнено!" : $"{body}";
                 }
                 catch (Exception e)
                 {
