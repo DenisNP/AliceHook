@@ -63,7 +63,7 @@ namespace AliceHook.Engine.Modifiers
             while (true)
             {
                 var diff = DateTime.Now - started;
-                if (state.HasLastResult() ||  diff > new TimeSpan(0, 0, 0, 1500))
+                if (state.HasLastResult() ||  diff > new TimeSpan(0, 0, 0, 1200))
                 {
                     break;
                 }
