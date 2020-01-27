@@ -17,6 +17,7 @@ namespace AliceHook.Engine
             new ModifierEnter(),
             new ModifierTestRequest(),
             new ModifierExample(),
+            new ModifierExamplesList(),
             new ModifierWebhookResponse(),
             new ModifierHelp(),
             new ModifierExit(),

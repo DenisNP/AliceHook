@@ -13,8 +13,6 @@ namespace AliceHook.Engine.Modifiers
             "помог",
             "что ты умеешь",
             "что делать",
-            "пример",
-            "например"
         };
 
         protected override bool CheckState(State state)
@@ -32,8 +30,7 @@ namespace AliceHook.Engine.Modifiers
                         x => new Button
                         {
                             Title = x.Title,
-                            Hide = false,
-                            Url = x.Link
+                            Hide = false
                         }
                     )
                 );
