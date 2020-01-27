@@ -57,7 +57,7 @@ namespace AliceHook.Engine.Modifiers
             return new SimpleResponse
             {
                 Text = "Ожидание ответа от вебхука прекращено. Что дальше?",
-                Buttons = new []{ "Добавить вебхук", "Список", /*"Примеры,"*/ "Выход" }
+                Buttons = new []{ "Добавить вебхук", "Список", "Примеры", "Выход" }
             };
         }
     }
