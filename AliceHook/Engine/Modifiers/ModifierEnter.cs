@@ -1,4 +1,3 @@
-using System.Linq;
 using AliceHook.Models;
 
 namespace AliceHook.Engine.Modifiers
@@ -32,7 +31,7 @@ namespace AliceHook.Engine.Modifiers
         protected override AliceResponse CreateResponse(AliceRequest request, State state)
         {
             var response = base.CreateResponse(request, state);
-            if (state.HasWebhooks())
+            if (!state.HasWebhooks())
             {
                 ModifierHelp.AddExamplesTo(response);
             }
