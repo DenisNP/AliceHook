@@ -24,18 +24,7 @@ namespace AliceHook.Engine.Modifiers
         protected override AliceResponse CreateResponse(AliceRequest request, State state)
         {
             var response = base.CreateResponse(request, state);
-            if (state.Step == Step.None && request.HasScreen())
-            {
-                response.Response.Buttons.AddRange(
-                    Example.List().Select(
-                        x => new Button
-                        {
-                            Title = x.Title,
-                            Hide = false
-                        }
-                    )
-                );
-            }
+            ModifierHelp.AddExamplesTo(response);
 
             return response;
         }

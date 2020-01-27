@@ -25,18 +25,23 @@ namespace AliceHook.Engine.Modifiers
             var response = base.CreateResponse(request, state);
             if (state.Step == Step.None && request.HasScreen())
             {
-                response.Response.Buttons.AddRange(
-                    Example.List().Select(
-                        x => new Button
-                        {
-                            Title = x.Title,
-                            Hide = false
-                        }
-                    )
-                );
+                AddExamplesTo(response);
             }
 
             return response;
+        }
+
+        public static void AddExamplesTo(AliceResponse response)
+        {
+            response.Response.Buttons.AddRange(
+                Example.List().Select(
+                    x => new Button
+                    {
+                        Title = x.Title,
+                        Hide = false
+                    }
+                )
+            );
         }
 
         protected override SimpleResponse Respond(AliceRequest request, State state)

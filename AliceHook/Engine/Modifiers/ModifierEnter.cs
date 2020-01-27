@@ -28,5 +28,12 @@ namespace AliceHook.Engine.Modifiers
             
             return ModifierHelp.GetHelp(Step.None, request.HasScreen());
         }
+
+        protected override AliceResponse CreateResponse(AliceRequest request, State state)
+        {
+            var response = base.CreateResponse(request, state);
+            ModifierHelp.AddExamplesTo(response);
+            return response;
+        }
     }
 }
