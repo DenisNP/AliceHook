@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AliceHook.Models;
 
 namespace AliceHook.Engine.Modifiers
@@ -24,7 +25,7 @@ namespace AliceHook.Engine.Modifiers
         protected override AliceResponse CreateResponse(AliceRequest request, State state)
         {
             var response = base.CreateResponse(request, state);
-            /* if (state.Step == Step.None && request.HasScreen())
+            if (state.Step == Step.None && request.HasScreen())
             {
                 response.Response.Buttons.AddRange(
                     Example.List().Select(
@@ -36,7 +37,7 @@ namespace AliceHook.Engine.Modifiers
                         }
                     )
                 );
-            } */
+            }
 
             return response;
         }
