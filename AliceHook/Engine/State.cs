@@ -1,3 +1,4 @@
+using System.Linq;
 using AliceHook.Models;
 
 namespace AliceHook.Engine
@@ -21,6 +22,8 @@ namespace AliceHook.Engine
         {
             return !LastResult.IsNullOrEmpty() || !LastError.IsNullOrEmpty();
         }
+
+        public bool HasWebhooks() => User.Webhooks != null && User.Webhooks.Any();
 
         public void ClearLastResult()
         {

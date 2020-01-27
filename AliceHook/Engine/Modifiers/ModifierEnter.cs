@@ -14,7 +14,7 @@ namespace AliceHook.Engine.Modifiers
         {
             state.Clear();
 
-            if (state.User.Webhooks != null && state.User.Webhooks.Any())
+            if (state.HasWebhooks())
             {
                 return new SimpleResponse
                 {
@@ -32,7 +32,11 @@ namespace AliceHook.Engine.Modifiers
         protected override AliceResponse CreateResponse(AliceRequest request, State state)
         {
             var response = base.CreateResponse(request, state);
-            ModifierHelp.AddExamplesTo(response);
+            if (state.HasWebhooks())
+            {
+                ModifierHelp.AddExamplesTo(response);
+            }
+
             return response;
         }
     }
