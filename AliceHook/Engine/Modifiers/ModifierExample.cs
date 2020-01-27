@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AliceHook.Models;
 
 namespace AliceHook.Engine.Modifiers
@@ -44,6 +45,9 @@ namespace AliceHook.Engine.Modifiers
                     Url = example.Link
                 }
             };
+            
+            var suggests = new [] {"Добавить вебхук", "Примеры", "Список", "Выход"};
+            response.Response.Buttons.AddRange(suggests.Select(x => new Button{Title = x}));
             
             return response;
         }

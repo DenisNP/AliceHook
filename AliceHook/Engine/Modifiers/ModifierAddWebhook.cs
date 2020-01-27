@@ -9,10 +9,13 @@ namespace AliceHook.Engine.Modifiers
         {
             "добав вебхук",
             "новый вебхук",
+            "созда вебхук",
             "добав webhook",
             "новый webhook",
+            "созда webhook",
             "добав веб хук",
             "новый веб хук",
+            "созда веб хук",
         };
 
         protected override bool CheckState(State state)
