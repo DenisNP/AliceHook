@@ -35,10 +35,8 @@ namespace AliceHook.Engine.Modifiers
                 Url = state.TempUrl
             };
             
-            using var db = new DatabaseContext();
             state.User.Webhooks.Add(webhook);
-            db.Users.Update(state.User);
-            db.SaveChanges();
+            FirestoreContext.Me.Set("users", state.User.Id, state.User);
 
             state.Clear();
 

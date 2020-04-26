@@ -1,14 +1,15 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Google.Cloud.Firestore;
 
 namespace AliceHook.Models
 {
+    [FirestoreData]
     public class Webhook
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
+        [FirestoreProperty]
         public int Id { get; set; }
+        [FirestoreProperty]
         public string Phrase { get; set; }
+        [FirestoreProperty]
         public string Url { get; set; }
     }
 }

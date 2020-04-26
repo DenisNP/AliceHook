@@ -30,10 +30,8 @@ namespace AliceHook.Engine.Modifiers
                 };
             }
             
-            using var db = new DatabaseContext();
-            db.Remove(w);
             state.User.Webhooks.Remove(w);
-            db.SaveChanges();
+            FirestoreContext.Me.Set("users", state.User.Id, state.User);
 
             return new SimpleResponse
             {

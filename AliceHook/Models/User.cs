@@ -1,14 +1,17 @@
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Google.Cloud.Firestore;
 
 namespace AliceHook.Models
 {
+    [FirestoreData]
     public class User
     {
-        [Key]
+        [FirestoreProperty]
         public string Id { get; set; }
+        [FirestoreProperty]
         public string Token { get; set; }
+        [FirestoreProperty]
         public List<Webhook> Webhooks { get; set; } = new List<Webhook>();
 
         public Webhook FindWebhook(string phrase)
