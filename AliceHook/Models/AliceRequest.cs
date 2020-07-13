@@ -89,5 +89,10 @@ namespace AliceHook.Models
 
             return Request.Command.ToLower() == "ping";
         }
+
+        public bool IsOutsideCommand()
+        {
+            return Request != null && !Request.Command.IsNullOrEmpty() && Session != null && Session.New;
+        }
     }
 }

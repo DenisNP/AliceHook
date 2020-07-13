@@ -15,6 +15,13 @@ namespace AliceHook.Engine.Modifiers
             return state.Step == Step.None && GetWebhook(request, state) != null;
         }
 
+        protected override AliceResponse CreateResponse(AliceRequest request, State state)
+        {
+            var response = base.CreateResponse(request, state);
+            response.Response.EndSession = request.IsOutsideCommand();
+            return response;
+        }
+
         protected override SimpleResponse Respond(AliceRequest request, State state)
         {
             var webhook = GetWebhook(request, state);

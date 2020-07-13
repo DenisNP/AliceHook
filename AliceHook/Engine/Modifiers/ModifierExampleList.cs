@@ -3,7 +3,7 @@ using AliceHook.Models;
 
 namespace AliceHook.Engine.Modifiers
 {
-    public class ModifierExamplesList : ModifierBaseKeywords
+    public class ModifierExampleList : ModifierBaseKeywords
     {
         protected override List<string> Keywords { get; } = new List<string>
         {
