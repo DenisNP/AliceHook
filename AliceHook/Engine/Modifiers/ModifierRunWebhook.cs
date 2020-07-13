@@ -18,7 +18,7 @@ namespace AliceHook.Engine.Modifiers
         protected override AliceResponse CreateResponse(AliceRequest request, State state)
         {
             var response = base.CreateResponse(request, state);
-            response.Response.EndSession = request.IsOutsideCommand();
+            response.Response.EndSession = state.Step != Step.AwaitWebhookResponse && request.IsOutsideCommand();
             return response;
         }
 
